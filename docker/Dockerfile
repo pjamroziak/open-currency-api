@@ -5,15 +5,13 @@ RUN apk upgrade
 RUN apk add bash make
 RUN apk add --no-cache ca-certificates
 
-RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-COPY package*.json /usr/src/app
+COPY package*.json .
 
-RUN npm set-script prepare ""
-RUN npm install
+RUN npm ci --ignore-scripts
 
-COPY . /usr/src/app
+COPY . .
 
 RUN make build
 
@@ -26,14 +24,12 @@ RUN apk add --no-cache ca-certificates
 
 WORKDIR /usr/src/app
 
-COPY package*.json /usr/src/app
+COPY package*.json .
 
-RUN npm set-script prepare ""
-RUN npm install --production
+RUN npm ci --omit=dev --ignore-scripts
 
-COPY . /usr/src/app
+COPY . .
 
 COPY --from=builder /usr/src/app/dist ./dist
 
-EXPOSE 3000
 CMD ["make", "run"]
