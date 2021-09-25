@@ -7,5 +7,5 @@ export default () => ({
 
 export interface ApplicationProperties {
   port: number;
-  host: number;
+  host: string;
 }
