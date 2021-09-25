@@ -1,26 +1,14 @@
+import { VersioningType } from '@nestjs/common';
 import { INestApplication } from '@nestjs/common/interfaces/nest-application.interface';
-import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { FastifyAdapter } from '@nestjs/platform-fastify/adapters/fastify-adapter';
 import { exit } from 'process';
 import { AppModule } from './app.module';
-import { ApplicationProperties } from './configs/default.config';
-import PropertyNotFoundException from './exceptions/PropertyNotFoundException';
-
-function getApplicationProperties(application: INestApplication) {
-  const configService: ConfigService = application.get(ConfigService);
-
-  const propertyName = 'application';
-  const applicationProperties: ApplicationProperties =
-    configService.get<ApplicationProperties>(propertyName);
-
-  if (!applicationProperties) {
-    throw new PropertyNotFoundException(propertyName);
-  }
-
-  return applicationProperties;
-}
+import {
+  ApplicationProperties,
+  getApplicationProperties,
+} from './configs/default.config';
 
 async function bootstrap() {
   const application: INestApplication =
@@ -28,6 +16,11 @@ async function bootstrap() {
       AppModule,
       new FastifyAdapter(),
     );
+
+  application.setGlobalPrefix('api');
+  application.enableVersioning({
+    type: VersioningType.URI,
+  });
 
   const applicationProperties: ApplicationProperties =
     getApplicationProperties(application);
