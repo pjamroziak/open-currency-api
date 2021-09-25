@@ -1,6 +1,6 @@
 IMG_NAME ?= open-currency-api
 DOCKER_TAG ?= latest
-COMPANY ?= jamdev
+COMPANY ?= pjamroziak
 
 install:
 	npm install
@@ -14,6 +14,9 @@ run:
 debug:
 	npm run start:debug
 
+test:
+	npm test
+
 docker-build:
 	docker build -t $(COMPANY)/$(IMG_NAME):$(DOCKER_TAG) -f docker/Dockerfile .
 
@@ -21,3 +24,6 @@ docker-run:
 	docker run --name $(IMG_NAME) \
 		--env-file .env \
 		-p 3000:3000 $(COMPANY)/$(IMG_NAME):$(DOCKER_TAG)
+
+docker-push:
+	docker push $(COMPANY)/$(IMG_NAME):$(DOCKER_TAG)
