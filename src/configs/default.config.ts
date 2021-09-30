@@ -7,11 +7,26 @@ export default () => ({
     port: parseInt(process.env.APP_PORT) || 3000,
     host: process.env.APP_HOST || '0.0.0.0',
   },
+  scrappers: {
+    ecb: {
+      baseUrl: process.env.SCRAPPER_ECB_BASE_URL,
+      endpoint: process.env.SCRAPPER_ECB_ENDPOINT,
+    },
+  },
 });
 
 export interface ApplicationProperties {
   port: number;
   host: string;
+}
+
+export interface ScrappersConfig {
+  ecb: EcbScrapperConfig;
+}
+
+export interface EcbScrapperConfig {
+  baseUrl: string;
+  endpoint: string;
 }
 
 export const getApplicationProperties = (
