@@ -7,6 +7,9 @@ export default () => ({
     port: parseInt(process.env.APP_PORT) || 3000,
     host: process.env.APP_HOST || '0.0.0.0',
   },
+  database: {
+    uri: process.env.DATABASE_URI,
+  },
   scrappers: {
     ecb: {
       baseUrl: process.env.SCRAPPER_ECB_BASE_URL,
@@ -18,6 +21,10 @@ export default () => ({
 export interface ApplicationProperties {
   port: number;
   host: string;
+}
+
+export interface DatabaseConfig {
+  uri: string;
 }
 
 export interface ScrappersConfig {
