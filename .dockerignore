@@ -1,0 +1,22 @@
+# Folders
+node_modules
+docker
+.vscode
+.husky
+coverage
+dist
+tests
+
+# Configs
+nest-cli.json
+jest.config.ts
+.env*
+.eslintrc.js
+.prettierrc
+
+# Git
+.git*
+
+# Misc.
+README.md
+Makefile
